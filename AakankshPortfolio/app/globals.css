@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "lenis/dist/lenis.css";
+@import "../styles/design-tokens.css";
+
+@layer base {
+  html {
+    @apply bg-background text-foreground antialiased;
+    scroll-behavior: auto;
+  }
+
+  html.custom-cursor,
+  html.custom-cursor * {
+    cursor: none !important;
+  }
+
+  body {
+    @apply min-h-screen overflow-x-hidden;
+    background-color: var(--color-bg);
+    background-image: theme(backgroundImage.system-vignette);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-accent/30 text-background;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-accent2;
+  }
+
+  a {
+    @apply text-inherit;
+  }
+}
+
+@layer utilities {
+  .section-y {
+    padding-top: var(--section-y-mobile);
+    padding-bottom: var(--section-y-mobile);
+  }
+
+  @media (min-width: 640px) {
+    .section-y {
+      padding-top: var(--section-y-desktop);
+      padding-bottom: var(--section-y-desktop);
+    }
+  }
+
+  .kicker {
+    @apply font-mono text-[10px] uppercase tracking-[0.2em] text-muted sm:text-[11px];
+  }
+
+  .heading-display {
+    @apply font-display font-medium tracking-tight text-foreground;
+  }
+
+  .heading-section {
+    @apply font-display text-[2rem] font-medium leading-[1.08] tracking-tight sm:text-[2.5rem] sm:leading-[1.06] lg:text-[2.9rem];
+  }
+
+  .surface-raised {
+    @apply border border-border-strong bg-surface shadow-lift-sm;
+  }
+
+  .surface-sunk {
+    @apply border border-border bg-surface-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)];
+  }
+
+  .noise-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    opacity: 0.01;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 50;
+  }
+
+  @keyframes hero-typewriter-cursor {
+    0%,
+    40% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0.14;
+    }
+  }
+
+  .hero-typewriter-cursor {
+    animation: hero-typewriter-cursor 1.05s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-typewriter-cursor {
+      animation: none;
+      opacity: 0.85;
+    }
+  }
+}

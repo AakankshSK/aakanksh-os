@@ -1,0 +1,23 @@
+:root {
+  --color-bg: #0a0a0a;
+  --color-fg: #ededed;
+  --color-muted: #6b7280;
+  --color-accent: #c9f31d;
+  --color-accent-2: #7df9ff;
+  --radius-lg: 1.25rem;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --section-y-mobile: 4.75rem;
+  --section-y-desktop: 6.75rem;
+  --prose-rhythm: 1.62;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
