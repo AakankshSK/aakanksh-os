@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/cn";
+import { useMaxWidth768 } from "@/hooks/useMaxWidth768";
 
 export type BuilderStepProps = {
   number: string;
@@ -18,6 +19,7 @@ export function BuilderStep({ number, title, description, hint, offsetClass }: B
   const ref = useRef<HTMLLIElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.32 });
   const [hovered, setHovered] = useState(false);
+  const isMobile = useMaxWidth768();
 
   return (
     <motion.li
@@ -52,8 +54,8 @@ export function BuilderStep({ number, title, description, hint, offsetClass }: B
           "transition-colors duration-300",
           "group-hover/step:border-red-500/40",
         )}
-        whileHover={{ x: 5 }}
-        transition={{ type: "spring", stiffness: 420, damping: 32 }}
+        whileHover={isMobile ? undefined : { x: 5 }}
+        transition={isMobile ? { duration: 0.2 } : { type: "spring", stiffness: 420, damping: 32 }}
       >
         <div
           className={cn(

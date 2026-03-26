@@ -3,6 +3,7 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/cn";
+import { useMaxWidth768 } from "@/hooks/useMaxWidth768";
 
 type CaseStudy = {
   id: "01" | "02";
@@ -85,6 +86,7 @@ export function Projects() {
 }
 
 function CaseStudyModule({ project }: { project: CaseStudy }) {
+  const isMobile = useMaxWidth768();
   const rootRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: rootRef,
@@ -101,10 +103,14 @@ function CaseStudyModule({ project }: { project: CaseStudy }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.56, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{
-        scale: 1.012,
-        boxShadow: "0 28px 80px -36px rgba(0,0,0,0.7), 0 0 28px rgba(239,68,68,0.08)",
-      }}
+      whileHover={
+        isMobile
+          ? undefined
+          : {
+              scale: 1.012,
+              boxShadow: "0 28px 80px -36px rgba(0,0,0,0.7), 0 0 28px rgba(239,68,68,0.08)",
+            }
+      }
       className="group relative overflow-hidden border border-white/[0.08] bg-[linear-gradient(165deg,rgba(17,17,18,0.94)_0%,rgba(10,10,11,0.98)_58%,rgba(8,8,9,1)_100%)]"
     >
       <span className="pointer-events-none absolute right-5 top-5 h-1.5 w-1.5 rounded-full bg-red-500/55" aria-hidden />
@@ -178,13 +184,29 @@ function CaseStudyModule({ project }: { project: CaseStudy }) {
             />
             <motion.div
               className="absolute -left-16 top-1/3 h-28 w-28 rounded-full border border-red-400/30"
-              animate={{ x: [0, 24, 0], opacity: [0.22, 0.44, 0.22] }}
-              transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+              animate={
+                isMobile
+                  ? { x: 12, opacity: 0.32 }
+                  : { x: [0, 24, 0], opacity: [0.22, 0.44, 0.22] }
+              }
+              transition={
+                isMobile
+                  ? { duration: 0.2 }
+                  : { duration: 7.5, repeat: Infinity, ease: "easeInOut" }
+              }
             />
             <motion.div
               className="absolute right-10 top-10 h-24 w-24 rounded-full border border-white/[0.16]"
-              animate={{ y: [0, 10, 0], opacity: [0.2, 0.35, 0.2] }}
-              transition={{ duration: 8.2, repeat: Infinity, ease: "easeInOut" }}
+              animate={
+                isMobile
+                  ? { y: 5, opacity: 0.28 }
+                  : { y: [0, 10, 0], opacity: [0.2, 0.35, 0.2] }
+              }
+              transition={
+                isMobile
+                  ? { duration: 0.2 }
+                  : { duration: 8.2, repeat: Infinity, ease: "easeInOut" }
+              }
             />
             <div className="absolute inset-x-4 bottom-4 border-t border-white/[0.08] pt-3">
               <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted/75">visual diagnostic panel</p>

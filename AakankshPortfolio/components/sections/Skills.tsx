@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { skillGroups } from "@/lib/skillGroups";
 import type { CalibrationReadout } from "@/components/skills/FieldResponseSurface";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useMaxWidth768 } from "@/hooks/useMaxWidth768";
 import { cn } from "@/lib/cn";
 
 /** Reserved box — same footprint for loading and loaded field (reduces CLS). */
@@ -120,6 +121,7 @@ function SkillPanel({
   reduced: boolean;
 }) {
   const [active, setActive] = useState(false);
+  const isMobile = useMaxWidth768();
 
   return (
     <motion.article
@@ -132,7 +134,7 @@ function SkillPanel({
       whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.22 }}
       whileHover={
-        reduced
+        reduced || isMobile
           ? undefined
           : {
               y: -4,
@@ -141,7 +143,7 @@ function SkillPanel({
                 "inset 0 0 22px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.07), 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255,0,0,0.08)",
             }
       }
-      whileTap={reduced ? undefined : { scale: 1.02 }}
+      whileTap={reduced || isMobile ? undefined : { scale: 1.02 }}
       animate={
         active
           ? {
@@ -152,7 +154,7 @@ function SkillPanel({
           : { borderColor: "rgba(255,255,255,0.08)" }
       }
       transition={
-        reduced
+        reduced || isMobile
           ? { duration: 0.35, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }
           : { type: "spring", stiffness: 280, damping: 26, mass: 0.6 }
       }
